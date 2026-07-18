@@ -1,32 +1,39 @@
 class Node {
-    constructor(value = null, nextNode = null) {
+    constructor(key = null, value = null, nextNode = null) {
+        this.key = key;
         this.value = value;
         this.nextNode = nextNode;
     }
 }
 
 export default class linkedList {
-    constructor(value) {
-        this.head = new Node(value);
+    constructor() {
+        this.head = new Node();
     }
-    append(element) {
-        if (this.head.value === null) this.head.value = element;
+    append(key, element) {
+        if (this.head.key === null) {
+            this.head.key = key;
+            this.head.value = element;
+        }
         else {
             let tmp = this.head;
             while (tmp.nextNode !== null) tmp = tmp.nextNode;
-            tmp.nextNode = element instanceof Node ? element : new Node(element);
+            tmp.nextNode = new Node(key, element);
         }
     }
-    prepend(element) {
-        if (this.head.value === null) this.head.value = element;
+    prepend(key, element) {
+        if (this.head.key === null) {
+            this.head.key = key;
+            this.head.value = element;
+        }
         else {
             let tmp = this.head;
-            this.head = element instanceof Node ? element : new Node(element);
+            this.head = new Node(key, element);
             this.head.nextNode = tmp;
         }
     }
-    size() {
-        if (this.head.value === null) return 0;
+    listSize() {
+        if (this.head.key === null) return 0;
         else {
             let tmp = this.head;
             let count = 1;
@@ -36,28 +43,22 @@ export default class linkedList {
             return count;
         }
     }
-    header() {
-        if (this.head.value === null) return undefined;
-        return this.head.value;
+    listHead() {
+        if (this.head.key === null) return undefined;
+        return `(${this.head.key},${this.head.value})`;
     }
-    tail() {
+    listTail() {
         let tmp = this.head;
         while (tmp.nextNode !== null) tmp = tmp.nextNode;
 
-        return tmp.value;
+        return `(${tmp.key},${tmp.value})`;
     }
-    at(index) {
-        const length = this.size();
-        if (index < 0 || index > length - 1) return undefined;
-
+    at(key) {
         let tmp = this.head;
-        let count = 1;
-        while (count <= index) {
+        while (tmp.key !== key) {
             tmp = tmp.nextNode;
-            count++;
         }
-        return tmp.value;
-
+        return (tmp.key === key ) ?`(${tmp.key},${tmp.value})` : undefined;
     }
     pop() {
         if (this.head.value === null) return undefined;
@@ -73,12 +74,22 @@ export default class linkedList {
             return firstValue;
         }
     }
-    contains(value) {
+    containsValue(value) {
         let tmp = this.head;
         const length = this.size();
 
         for (let i = 0; i < length; i++) {
             if (tmp.value === value) return true;
+            tmp = tmp.nextNode;
+        }
+        return false;
+    }
+    containsKey(keyValue) {
+        let tmp = this.head;
+        const length = this.size();
+
+        for (let i = 0; i < length; i++) {
+            if (tmp.key === keyValue) return true;
             tmp = tmp.nextNode;
         }
         return false;
@@ -96,16 +107,16 @@ export default class linkedList {
         return -1;
     }
     toString() {
-        if (this.head.value === null) return "( ) ->  null";
+        if (this.head.key === null) return "( )";
         else {
             let tmp = this.head;
             let formatedString = "";
 
             while (tmp.nextNode !== null) {
-                formatedString += `(${tmp.value}) -> `;
+                formatedString += `(${tmp.key},${tmp.value}) -> `;
                 tmp = tmp.nextNode;
             }
-            formatedString += `(${tmp.value}) `;
+            formatedString += `(${tmp.key},${tmp.value}) `;
             return formatedString;
         }
     }
@@ -163,13 +174,14 @@ export default class linkedList {
 }
 
 
-const list = new linkedList();
-list.append(10);
-list.append(20);
-list.append(30);
-list.prepend(40);
-list.append(50);
+// const list = new linkedList();
+// list.append("FiRst", 10);
+// debugger
+// list.append("seCONd", 20);
+// list.append("THIrd", 30);
+// // list.prepend("foUrTh",40);
+// list.append("FifTH", 50);
 
 
-// console.log(JSON.stringify(list, null, 2));
-export { list, linkedList };
+// console.log(JSON.stringify(list, null));
+export {linkedList };

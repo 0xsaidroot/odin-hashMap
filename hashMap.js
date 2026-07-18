@@ -1,11 +1,12 @@
 import { linkedList } from "./linkedList.js";
 
-class HashMap {
+export class HashMap {
 
-    loadFactor = 0.75;
-    capacity = 16;
     constructor() {
-        this.bucketSize = new Array(this.capacity);
+        this.capacity = 16;
+        this.bucket = new Array(this.capacity);
+        this.loadFactor = 0.75;
+        
     }
 
     countFilledBucket() {
@@ -32,22 +33,30 @@ class HashMap {
             this.bucketSize[hashedKey].append(value);
         } else {
             this.bucketSize[hashedKey] = new linkedList(value)
-        }  
-    }
-    get(key){
-        const hashedKey = this.hash(key);
-        if(this.bucketSize[hashedKey] === undefined) return null
-        else{
-            let list = this.bucketSize[hashedKey];
-            return list.toString();
         }
+    }
+    get(key) {
+        const hashedKey = this.hash(key);
+        if (this.bucketSize[hashedKey] === undefined) return null
+
+        let list = this.bucketSize[hashedKey];
+        return list.at(key);
+    }
+    has(key) {
+        let hashedKey = this.hash(key);
+        if (this.bucketSize[hashedKey] === null) return false;
+
+        let list = this.bucketSize[hashedKey];
+        return list.containsKey(key);
+
     }
 }
 
 let hashMap = new HashMap();
-
-// debugger
+// console.log(hashMap.get('1234'));
+hashMap.set("Nouredine", "1234");
 console.log(hashMap.get('1234'));
-hashMap.set("Nouredine","1234");
-console.log(hashMap.get("Nouredine"));
-console.log(JSON.stringify(hashMap, null));
+console.log(hashMap);
+// hashMap.get("Nouredine");
+// console.log(hashMap.get("Nouredine"));
+// console.log(JSON.stringify(hashMap, null));
