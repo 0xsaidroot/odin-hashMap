@@ -105,7 +105,7 @@ export default class linkedList {
                 formatedString += `(${tmp.value}) -> `;
                 tmp = tmp.nextNode;
             }
-            formatedString += `(${tmp.value}) -> null`;
+            formatedString += `(${tmp.value}) `;
             return formatedString;
         }
     }
