@@ -14,16 +14,16 @@ describe("LinkedList test suite", () => {
     test.skip("It should append an elemet behind head correctly", () => {
         expect(newList.toString()).toBe("(first,1) -> (second,2) ");
     })
-    test.skip("It should correctly prepend", () => {
+    test("It should correctly prepend", () => {
         expect(newList.toString()).toBe("(third,3) -> (first,1) -> (second,2) ");
     })
-    test.skip("correct listSIze", () => {
+    test("correct listSIze", () => {
         expect(newList.listSize()).toBe(3);
     })
     test("correct listHead", () => {
         expect(newList.listHead()).toBe("(third,3)");
     })
-    test.skip("correct listTail", () => {
+    test("correct listTail", () => {
         expect(newList.listTail()).toBe("(second,2)");
     })
     test("correct value at key ", () => {

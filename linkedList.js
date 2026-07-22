@@ -1,5 +1,5 @@
 class Node {
-    constructor(key = null, value = null, nextNode = null) {
+    constructor(key, value = null, nextNode = null) {
         this.key = key;
         this.value = value;
         this.nextNode = nextNode;
@@ -7,8 +7,8 @@ class Node {
 }
 
 export default class linkedList {
-    constructor() {
-        this.head = new Node();
+    constructor(key, value = null) {
+        this.head = new Node(key, value);
     }
     append(key, element) {
         if (this.head.key === null) {
@@ -58,7 +58,7 @@ export default class linkedList {
         while (tmp.key !== key) {
             tmp = tmp.nextNode;
         }
-        return (tmp.key === key ) ?`(${tmp.key},${tmp.value})` : undefined;
+        return (tmp.key === key) ? `(${tmp.key},${tmp.value})` : undefined;
     }
     pop() {
         if (this.head.value === null) return undefined;
@@ -76,7 +76,7 @@ export default class linkedList {
     }
     containsValue(value) {
         let tmp = this.head;
-        const length = this.size();
+        const length = this.listSize();
 
         for (let i = 0; i < length; i++) {
             if (tmp.value === value) return true;
@@ -86,7 +86,7 @@ export default class linkedList {
     }
     containsKey(keyValue) {
         let tmp = this.head;
-        const length = this.size();
+        const length = this.listSize();
 
         for (let i = 0; i < length; i++) {
             if (tmp.key === keyValue) return true;
@@ -94,13 +94,13 @@ export default class linkedList {
         }
         return false;
     }
-    findIndex(value) {
+    findIndex(key) {
         let tmp = this.head;
         let index = 0;
-        const length = this.size();
+        const length = this.listSize();
 
         for (let i = 0; i < length; i++) {
-            if (tmp.value === value) return index;
+            if (tmp.key === key) return index;
             tmp = tmp.nextNode;
             index++;
         }
@@ -120,20 +120,13 @@ export default class linkedList {
             return formatedString;
         }
     }
-    insertAt(index, ...values) {
-        if (index < 0 || index > this.size() - 1) return "RangeError";
+    insertAt(index, key, value) {
+        if (index < 0 || index > this.listSize() - 1) return "RangeError";
 
         let tmp = this.head;
-        let newNodes = values.map(item => new Node(item));
-        const newNodesSize = newNodes.length;
-
+        let newNode = new Node(key, value);
         if (index === 0) {
-            this.head = newNodes[0];
-            for (let i = 1; i < newNodesSize; i++) {
-                let tmpHead = newNodes[i];
-                this.append(tmpHead);
-            }
-            this.append(tmp);
+            this.head = newNode;
         }
         else {
             let count = 1;
@@ -141,18 +134,16 @@ export default class linkedList {
                 tmp = tmp.nextNode;
                 count++;
             }
-            let tmpNextNode = tmp.nextNode;
-            for (let i = 0; i < newNodesSize; i++) {
-                tmp.nextNode = newNodes[i];
-                tmp = tmp.nextNode;
-            }
+            let tmpNextNode = (tmp.key === newNode.key) ? tmp.nextNode : null;
+            tmp.nextNode = newNode;
+            tmp = tmp.nextNode;
             tmp.nextNode = tmpNextNode;
 
         }
 
     }
     removeAt(index) {
-        if (index < 0 || index > this.size() - 1) return "RangeError";
+        if (index < 0 || index > this.listSize() - 1) return "RangeError";
 
         let tmp = this.head;
         if (index === 0) {
@@ -184,4 +175,4 @@ export default class linkedList {
 
 
 // console.log(JSON.stringify(list, null));
-export {linkedList };
+export { linkedList };

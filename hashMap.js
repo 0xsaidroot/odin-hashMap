@@ -11,8 +11,8 @@ export class HashMap {
 
     countFilledBucket() {
         let count = 0;
-        for (let i = 0; i <= this.bucketSize.length; i++) {
-            if (this.bucketSize[i] !== undefined) count++;
+        for (let i = 0; i <= this.bucket.length; i++) {
+            if (this.bucket[i] !== undefined) count++;
         }
         return count;
     }
@@ -29,24 +29,30 @@ export class HashMap {
     }
     set(key, value) {
         const hashedKey = this.hash(key);
-        if (this.bucketSize[hashedKey] instanceof linkedList) {
-            this.bucketSize[hashedKey].append(value);
+        if (this.bucket[hashedKey] instanceof linkedList) {
+
+            let list = this.bucket[hashedKey];
+
+            if(list.containsKey(key)){
+                let index = list.findIndex(key);
+                list.insertAt(index,key,value);
+            }else list.append(key,value);
         } else {
-            this.bucketSize[hashedKey] = new linkedList(value)
+            this.bucket[hashedKey] = new linkedList(key,value);
         }
     }
     get(key) {
         const hashedKey = this.hash(key);
-        if (this.bucketSize[hashedKey] === undefined) return null
+        if (this.bucket[hashedKey] === undefined) return null
 
-        let list = this.bucketSize[hashedKey];
+        let list = this.bucket[hashedKey];
         return list.at(key);
     }
     has(key) {
         let hashedKey = this.hash(key);
-        if (this.bucketSize[hashedKey] === null) return false;
+        if (this.bucket[hashedKey] === null) return false;
 
-        let list = this.bucketSize[hashedKey];
+        let list = this.bucket[hashedKey];
         return list.containsKey(key);
 
     }
@@ -54,9 +60,20 @@ export class HashMap {
 
 let hashMap = new HashMap();
 // console.log(hashMap.get('1234'));
+
 hashMap.set("Nouredine", "1234");
-console.log(hashMap.get('1234'));
-console.log(hashMap);
+debugger
+hashMap.set("Nouredine", "3541");
+hashMap.set("#", "1");
+hashMap.set("c", "2");
+hashMap.set("s", "1");
+hashMap.set("#", "3");
+// hashMap.set("Nouredine", "3681");
+hashMap.set("Adamou", "1234");
+console.log(JSON.stringify(hashMap,null));
+// console.log(hashMap.get("Nouredine"));
+// console.log(hashMap.this.bucket[3]);
+// console.log(hashMap)
 // hashMap.get("Nouredine");
 // console.log(hashMap.get("Nouredine"));
 // console.log(JSON.stringify(hashMap, null));
