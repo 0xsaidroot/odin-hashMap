@@ -62,11 +62,11 @@ let hashMap = new HashMap();
 // console.log(hashMap.get('1234'));
 
 hashMap.set("Nouredine", "1234");
-debugger
 hashMap.set("Nouredine", "3541");
 hashMap.set("#", "1");
 hashMap.set("c", "2");
 hashMap.set("s", "1");
+debugger
 hashMap.set("#", "3");
 // hashMap.set("Nouredine", "3681");
 hashMap.set("Adamou", "1234");

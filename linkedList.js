@@ -134,7 +134,7 @@ export default class linkedList {
                 tmp = tmp.nextNode;
                 count++;
             }
-            let tmpNextNode = (tmp.key === newNode.key) ? tmp.nextNode : null;
+            let tmpNextNode = tmp.nextNode.nextNode; 
             tmp.nextNode = newNode;
             tmp = tmp.nextNode;
             tmp.nextNode = tmpNextNode;
@@ -144,7 +144,7 @@ export default class linkedList {
     }
     removeAt(index) {
         if (index < 0 || index > this.listSize() - 1) return "RangeError";
-
+ 
         let tmp = this.head;
         if (index === 0) {
             this.head = this.head.nextNode;
